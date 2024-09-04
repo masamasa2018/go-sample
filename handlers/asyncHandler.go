@@ -10,36 +10,69 @@ import (
 // AsyncHandlerは/asyncエンドポイントのリクエストを処理するハンドラー関数
 func AsyncHandler(c *gin.Context) {
 	// チャネルの初期化
-	resultChan := make(chan string, 2)
+	resultChan := make(chan string, 3)
+	errorChan := make(chan error, 3)
 
-	// 2つのタスクを並行して実行するためにゴルーチンを起動
+	// 3つのタスクを並行して実行するためにゴルーチンを起動
 	go func() {
-		resultChan <- task1()
+		result, err := task1()
+		if err != nil {
+			errorChan <- err
+			return
+		}
+		resultChan <- result
 	}()
 
 	go func() {
-		resultChan <- task2()
+		result, err := task2()
+		if err != nil {
+			errorChan <- err
+			return
+		}
+		resultChan <- result
 	}()
 
-	// 並行処理の完了を待つ
-	result1 := <-resultChan
-	result2 := <-resultChan
+	go func() {
+		result, err := task3()
+		if err != nil {
+			errorChan <- err
+			return
+		}
+		resultChan <- result
+	}()
+
+	// 結果の収集
+	var results []string
+	for i := 0; i < 3; i++ {
+		select {
+		case result := <-resultChan:
+			results = append(results, result)
+		case err := <-errorChan:
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+	}
 
 	// レスポンスとして結果を返す
 	c.JSON(http.StatusOK, gin.H{
-		"task1": result1,
-		"task2": result2,
+		"results": results,
 	})
 }
 
 // タスク1のシミュレーション（時間のかかる処理）
-func task1() string {
+func task1() (string, error) {
 	time.Sleep(2 * time.Second) // 2秒間待機
-	return "Task 1 completed!"
+	return "Task 1 completed!", nil
 }
 
 // タスク2のシミュレーション（時間のかかる処理）
-func task2() string {
+func task2() (string, error) {
 	time.Sleep(3 * time.Second) // 3秒間待機
-	return "Task 2 completed!"
+	return "Task 2 completed!", nil
+}
+
+// タスク3のシミュレーション（時間のかかる処理）
+func task3() (string, error) {
+	time.Sleep(1 * time.Second) // 1秒間待機
+	return "Task 3 completed!", nil
 }

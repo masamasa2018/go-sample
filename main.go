@@ -9,10 +9,12 @@ import (
 func main() {
 	// Ginのデフォルトのルーターを作成
 	router := gin.Default()
-	// /async エンドポイントを定義
+
 	router.GET("/async", handlers.AsyncHandler)
-	// /sync エンドポイントを定義
-	router.GET("/sync", handlers.SyncHandler)
+
+	router.GET("/thread", handlers.ThreadHandler)
+
+	router.GET("/pointer", handlers.PointerHandler)
 
 	// サーバーの起動
 	router.Run(":8080")
