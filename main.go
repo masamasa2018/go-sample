@@ -1,7 +1,8 @@
 package main
 
 import (
-	"gin-goroutine/handlers" // handlersパッケージをインポート
+	"go-sample/handlers" // handlersパッケージをインポート
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -9,6 +10,10 @@ import (
 func main() {
 	// Ginのデフォルトのルーターを作成
 	router := gin.Default()
+
+	router.GET("/", func(c *gin.Context) {
+		c.String(http.StatusOK, "Hello, World!")
+	})
 
 	router.GET("/async", handlers.AsyncHandler)
 
