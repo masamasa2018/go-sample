@@ -22,6 +22,7 @@ http://localhost:8080/pointer
 　　handlers/pointerHandler.go
 
 テストの実行方法
+
 chmod +x test.sh
 
 ./test.sh
