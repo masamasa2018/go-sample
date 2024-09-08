@@ -1,8 +1,8 @@
 
-** 起動方法
+起動方法
 go run main.go
 
-** コードの説明
+コードの説明
 ・スレッドのサンプル
 http://localhost:8080/thread
 
@@ -21,7 +21,7 @@ http://localhost:8080/pointer
 　処理
 　　handlers/pointerHandler.go
 
-** テストの実行方法
+テストの実行方法
 chmod +x test.sh
 
 ./test.sh
