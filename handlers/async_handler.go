@@ -59,19 +59,19 @@ func AsyncHandler(c *gin.Context) {
 	})
 }
 
-// タスク1のシミュレーション（時間のかかる処理）
+// タスク1のシミュレーション
 func task1() (string, error) {
 	time.Sleep(2 * time.Second) // 2秒間待機
 	return "Task 1 completed!", nil
 }
 
-// タスク2のシミュレーション（時間のかかる処理）
+// タスク2のシミュレーション
 func task2() (string, error) {
 	time.Sleep(3 * time.Second) // 3秒間待機
 	return "Task 2 completed!", nil
 }
 
-// タスク3のシミュレーション（時間のかかる処理）
+// タスク3のシミュレーション
 func task3() (string, error) {
 	time.Sleep(1 * time.Second) // 1秒間待機
 	return "Task 3 completed!", nil
