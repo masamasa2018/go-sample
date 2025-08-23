@@ -21,6 +21,9 @@ func main() {
 
 	router.GET("/pointer", handlers.PointerHandler)
 
+	// サーバー起動前のメッセージ
+	fmt.Println("🚀 サーバーを http://localhost:8080 で起動します...")
+
 	// サーバーの起動
 	router.Run(":8080")
 }
