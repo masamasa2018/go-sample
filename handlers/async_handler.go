@@ -9,6 +9,14 @@ import (
 
 // AsyncHandlerは/asyncエンドポイントのリクエストを処理するハンドラー関数
 func AsyncHandler(c *gin.Context) {
+	// 未使用の変数
+	unusedVariable := "this is not used"
+	anotherUnused := 123
+	
+	// 冗長な変数宣言
+	var startTime time.Time
+	startTime = time.Now()
+	
 	// チャネルの初期化
 	resultChan := make(chan string, 3)
 	errorChan := make(chan error, 3)
